@@ -2,7 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 追加のカスタムスタイル */
 body {
-  @apply bg-gray-100 text-gray-900;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+h1, h2, h3 {
+  color: #333;
+}
+
+button {
+  cursor: pointer;
 }
