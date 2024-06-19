@@ -1,15 +1,16 @@
--- データベースの文字コードをUTF-8に設定
-CREATE DATABASE IF NOT EXISTS pos_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+-- データベースを削除して再作成
+DROP DATABASE IF EXISTS pos_db;
+CREATE DATABASE pos_db CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
 USE pos_db;
 
--- テーブルの文字コードをUTF-8に設定
+-- テーブルを作成
 CREATE TABLE IF NOT EXISTS taxes (
     ID INT AUTO_INCREMENT PRIMARY KEY,
     CODE CHAR(2) UNIQUE NOT NULL,
     NAME VARCHAR(20) NOT NULL,
     PERCENT DECIMAL(5, 2) NOT NULL
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+);
 
 CREATE TABLE IF NOT EXISTS products (
     PRD_ID INT AUTO_INCREMENT PRIMARY KEY,
@@ -18,7 +19,7 @@ CREATE TABLE IF NOT EXISTS products (
     PRICE DECIMAL(10, 2) NOT NULL,
     TAX_CD CHAR(2),
     FOREIGN KEY (TAX_CD) REFERENCES taxes(CODE)
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+);
 
 CREATE TABLE IF NOT EXISTS transactions (
     TRD_ID INT AUTO_INCREMENT PRIMARY KEY,
@@ -28,7 +29,7 @@ CREATE TABLE IF NOT EXISTS transactions (
     POS_NO CHAR(10) NOT NULL,
     TOTAL_AMT DECIMAL(10, 2) NOT NULL,
     TTL_AMT_EX_TAX DECIMAL(10, 2) NOT NULL
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+);
 
 CREATE TABLE IF NOT EXISTS transaction_details (
     TRD_ID INT NOT NULL,
@@ -41,12 +42,11 @@ CREATE TABLE IF NOT EXISTS transaction_details (
     FOREIGN KEY (TRD_ID) REFERENCES transactions(TRD_ID),
     FOREIGN KEY (PRD_ID) REFERENCES products(PRD_ID),
     FOREIGN KEY (TAX_CD) REFERENCES taxes(CODE)
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+);
 
--- 初期税率の追加
+-- 初期データを挿入
 INSERT INTO taxes (CODE, NAME, PERCENT) VALUES ('1', '10% Tax', 10.00), ('2', '8% Tax', 8.00);
 
--- 商品の追加
 INSERT INTO products (CODE, NAME, PRICE, TAX_CD) VALUES
 ('4902102070192', 'カップラーメン 醤油味', 200, '1'),
 ('4902102070208', 'カップラーメン 塩味', 200, '1'),
