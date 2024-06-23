@@ -1,0 +1,6 @@
+2024-06-23 14:15:44,480 - root - INFO - Transaction data: emp_cd='E001' store_cd='S001' pos_no='P001' total_amt=700.0 ttl_amt_ex_tax=636.3636363636363 products=[Product(product_id=2, quantity=1), Product(product_id=43, quantity=1)]
+2024-06-23 14:15:44,531 - root - INFO - Rounded TTL_AMT_EX_TAX: 636.36
+2024-06-23 14:15:44,539 - root - INFO - Inserted into transactions: 9
+2024-06-23 14:15:44,545 - root - INFO - Inserted into transaction_details: TRD_ID=9, PRD_ID=2
+2024-06-23 14:15:44,546 - root - INFO - Inserted into transaction_details: TRD_ID=9, PRD_ID=43
+2024-06-23 14:15:44,572 - root - INFO - Transaction committed successfully

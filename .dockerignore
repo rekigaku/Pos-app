@@ -1,0 +1,20 @@
+# Node.js dependencies
+node_modules
+npm-debug.log
+
+# Docker-specific files
+Dockerfile
+docker-compose.yml
+
+# Git repository
+.git
+.gitignore
+
+# Visual Studio Code settings
+.vscode
+
+# Environment variables file
+.env
+
+# MySQL data
+mysql

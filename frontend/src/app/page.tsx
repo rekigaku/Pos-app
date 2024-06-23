@@ -1,4 +1,5 @@
-import PosSystem from '../components/PosSystem';
+import React from 'react';
+import PosSystem from './components/PosSystem';
 
 const Home: React.FC = () => {
   return (

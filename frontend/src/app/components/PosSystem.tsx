@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
+import Encoding from 'encoding-japanese';
 
 interface Product {
   product_id: number;
@@ -20,8 +21,17 @@ const PosSystem: React.FC = () => {
     try {
       const response = await axios.get('http://localhost:8000/lookup', {
         params: { barcode },
+        responseType: 'arraybuffer',
       });
-      setProduct({ ...response.data, quantity: 1 });
+      const codes = new Uint8Array(response.data);
+      const encoding = Encoding.detect(codes);
+      const unicodeString = Encoding.convert(codes, {
+        to: 'UNICODE',
+        from: encoding,
+        type: 'string',
+      });
+      const productData = JSON.parse(unicodeString);
+      setProduct({ ...productData, quantity: 1 });
     } catch (error) {
       alert('Error fetching product');
     }
@@ -59,11 +69,12 @@ const PosSystem: React.FC = () => {
         ttl_amt_ex_tax: cart.reduce((total, item) => total + item.price * item.quantity / 1.1, 0),
         products: cart.map(item => ({ product_id: item.product_id, quantity: item.quantity })),
       };
-      await axios.post('http://localhost:8000/transactions', transaction);
+      const response = await axios.post('http://localhost:8000/transactions', transaction);
       setCart([]);
       alert('Purchase successful');
-    } catch (error) {
-      alert('Purchase failed');
+    } catch (error: any) { // errorをany型にキャスト
+      console.error('Purchase failed', error);
+      alert(`Purchase failed: ${error.response?.data?.detail || 'Unknown error'}`);
     }
   };
 
@@ -142,4 +153,4 @@ const PosSystem: React.FC = () => {
   );
 };
 
-export default PosSystem;
+export default PosSystem

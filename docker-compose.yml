@@ -1,32 +1,43 @@
-version: '3.8'
+version: '3.9'
 
 services:
+  db:
+    image: mysql:8.0
+    volumes:
+      - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - pos-app_mysql-data:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+
   backend:
     build:
       context: ./backend
-    container_name: pos-app-backend-1
+    volumes:
+      - ./backend:/app
+    command: ["/app/wait-for-it.sh", "db:3306", "--", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
     ports:
       - "8000:8000"
     depends_on:
       - db
-
-  db:
-    image: mysql:8.0
-    container_name: pos-app-db-1
     environment:
-      MYSQL_ROOT_PASSWORD: example
-      MYSQL_DATABASE: pos_db
-    volumes:
-      - db_data:/var/lib/mysql
+      DB_HOST: db
+      DB_USER: user
+      DB_PASSWORD: password
+      DB_NAME: mydatabase
 
   frontend:
     build:
       context: ./frontend
-    container_name: pos-app-frontend-1
     ports:
       - "3000:3000"
     depends_on:
       - backend
 
 volumes:
-  db_data:
+  pos-app_mysql-data:

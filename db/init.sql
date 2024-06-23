@@ -1,10 +1,8 @@
--- データベースを削除して再作成
-DROP DATABASE IF EXISTS pos_db;
-CREATE DATABASE pos_db CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+DROP DATABASE IF EXISTS mydatabase;
+CREATE DATABASE mydatabase CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
-USE pos_db;
+USE mydatabase;
 
--- テーブルを作成
 CREATE TABLE IF NOT EXISTS taxes (
     ID INT AUTO_INCREMENT PRIMARY KEY,
     CODE CHAR(2) UNIQUE NOT NULL,
@@ -44,10 +42,10 @@ CREATE TABLE IF NOT EXISTS transaction_details (
     FOREIGN KEY (TAX_CD) REFERENCES taxes(CODE)
 );
 
--- 初期データを挿入
 INSERT INTO taxes (CODE, NAME, PERCENT) VALUES ('1', '10% Tax', 10.00), ('2', '8% Tax', 8.00);
 
 INSERT INTO products (CODE, NAME, PRICE, TAX_CD) VALUES
+('1234567890123', 'cheese cake', 240, '1'),
 ('4902102070192', 'カップラーメン 醤油味', 200, '1'),
 ('4902102070208', 'カップラーメン 塩味', 200, '1'),
 ('4902102070215', 'カップラーメン 味噌味', 200, '1'),
