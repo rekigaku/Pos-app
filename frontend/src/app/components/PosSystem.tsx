@@ -3,17 +3,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Encoding from 'encoding-japanese';
+import Quagga from 'quagga';  // QuaggaJSをインポート
 
 interface Product {
   product_id: number;
   name: string;
   price: number;
   quantity: number;
-}
-
-interface TaxDetail {
-  rate: number;
-  amount: number;
 }
 
 const PosSystem: React.FC = () => {
@@ -29,7 +25,7 @@ const PosSystem: React.FC = () => {
 
   const handleLookup = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/lookup', {
+      const response = await axios.get('http://192.168.3.9:8000/lookup', {
         params: { barcode },
         responseType: 'arraybuffer',
       });
@@ -79,7 +75,7 @@ const PosSystem: React.FC = () => {
         ttl_amt_ex_tax: cart.reduce((total, item) => total + item.price * item.quantity / 1.1, 0),
         products: cart.map(item => ({ product_id: item.product_id, quantity: item.quantity })),
       };
-      const response = await axios.post('http://localhost:8000/transactions', transaction);
+      const response = await axios.post('http://192.168.3.9:8000/transactions', transaction);
       const { total_amount, total_tax, total_with_tax, tax_summary } = response.data;
 
       setPurchaseMessage(`お買い上げありがとうございました。`);
@@ -92,6 +88,36 @@ const PosSystem: React.FC = () => {
       console.error('Purchase failed', error);
       alert(`Purchase failed: ${error.response?.data?.detail || 'Unknown error'}`);
     }
+  };
+
+  const startScanner = () => {
+    Quagga.init({
+      inputStream: {
+        name: "Live",
+        type: "LiveStream",
+        target: document.querySelector('#scanner-container'), // スキャン対象のHTMLエレメント
+        constraints: {
+          width: 640,
+          height: 480,
+          facingMode: "environment" // リアカメラを使用
+        },
+      },
+      decoder: {
+        readers: ["code_128_reader", "ean_reader", "ean_8_reader", "code_39_reader", "code_39_vin_reader", "codabar_reader", "upc_reader", "upc_e_reader", "i2of5_reader"]
+      }
+    }, (err: any) => {  // ここでerrにany型を明示的に指定
+      if (err) {
+        console.log(err);
+        return;
+      }
+      console.log("Initialization finished. Ready to start");
+      Quagga.start();
+    });
+
+    Quagga.onDetected((data: any) => {  // ここでdataにany型を明示的に指定
+      setBarcode(data.codeResult.code);
+      Quagga.stop();
+    });
   };
 
   return (
@@ -110,6 +136,13 @@ const PosSystem: React.FC = () => {
           className="w-full mt-2 bg-cyan-500 hover:bg-cyan-600 text-white py-2 rounded transition duration-300"
         >
           商品を検索
+        </button>
+        <div id="scanner-container" className="w-full mt-4"></div>
+        <button
+          onClick={startScanner}
+          className="w-full mt-2 bg-cyan-500 hover:bg-cyan-600 text-white py-2 rounded transition duration-300"
+        >
+          スキャン（カメラ）
         </button>
       </div>
       {product && (

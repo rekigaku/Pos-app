@@ -12,6 +12,7 @@
     "axios": "^1.7.2",
     "encoding-japanese": "^2.2.0",
     "next": "14.2.4",
+    "quagga": "^0.12.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
