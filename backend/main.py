@@ -5,6 +5,7 @@ from typing import List
 import mysql.connector
 import logging
 import os
+from decimal import Decimal
 
 app = FastAPI()
 
@@ -62,10 +63,9 @@ def lookup(barcode: str):
 def create_transaction(transaction: Transaction):
     logging.info(f"Transaction data: {transaction}")
     conn = mysql.connector.connect(**db_config)
-    cursor = conn.cursor()
+    cursor = conn.cursor(dictionary=True)
 
     try:
-        # ttl_amt_ex_taxの値を小数点以下2桁に丸める
         ttl_amt_ex_tax_rounded = round(transaction.ttl_amt_ex_tax, 2)
         logging.info(f"Rounded TTL_AMT_EX_TAX: {ttl_amt_ex_tax_rounded}")
 
@@ -79,13 +79,41 @@ def create_transaction(transaction: Transaction):
         for product in transaction.products:
             cursor.execute(
                 "INSERT INTO transaction_details (TRD_ID, PRD_ID, PRD_CODE, PRD_NAME, PRD_PRICE, TAX_CD) "
-                "SELECT %s, PRD_ID, CODE, NAME, PRICE, '1' FROM products WHERE PRD_ID = %s",
+                "SELECT %s, PRD_ID, CODE, NAME, PRICE, TAX_CD FROM products WHERE PRD_ID = %s",
                 (trd_id, product.product_id)
             )
             logging.info(f"Inserted into transaction_details: TRD_ID={trd_id}, PRD_ID={product.product_id}")
 
         conn.commit()
         logging.info("Transaction committed successfully")
+
+        # Calculate taxes and total amounts
+        tax_summary = {}
+        total_tax = Decimal(0)
+        total_with_tax = Decimal(0)
+        for product in transaction.products:
+            cursor.execute(
+                "SELECT PRICE, TAX_CD FROM products WHERE PRD_ID = %s", (product.product_id,)
+            )
+            product_info = cursor.fetchone()
+            if product_info:
+                price = Decimal(product_info['PRICE'])
+                tax_cd = product_info['TAX_CD']
+                cursor.execute(
+                    "SELECT PERCENT FROM taxes WHERE CODE = %s", (tax_cd,)
+                )
+                tax_info = cursor.fetchone()
+                if tax_info:
+                    tax_rate = Decimal(tax_info['PERCENT'])
+                    tax_amount = round(price * product.quantity * tax_rate / 100, 2)
+                    total_tax += tax_amount
+                    total_with_tax += price * product.quantity + tax_amount
+                    if tax_rate in tax_summary:
+                        tax_summary[float(tax_rate)] += float(tax_amount)
+                    else:
+                        tax_summary[float(tax_rate)] = float(tax_amount)
+
+        total_with_tax = float(transaction.total_amt) + float(total_tax)
 
     except mysql.connector.Error as err:
         conn.rollback()
@@ -96,4 +124,10 @@ def create_transaction(transaction: Transaction):
         cursor.close()
         conn.close()
 
-    return {"message": "Transaction created successfully"}
+    return {
+        "message": "Transaction created successfully",
+        "total_amount": transaction.total_amt,
+        "total_tax": float(total_tax),
+        "total_with_tax": total_with_tax,
+        "tax_summary": tax_summary
+    }

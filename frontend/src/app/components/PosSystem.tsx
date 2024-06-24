@@ -11,11 +11,21 @@ interface Product {
   quantity: number;
 }
 
+interface TaxDetail {
+  rate: number;
+  amount: number;
+}
+
 const PosSystem: React.FC = () => {
   const [barcode, setBarcode] = useState('');
   const [product, setProduct] = useState<Product | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [cart, setCart] = useState<Product[]>([]);
+  const [purchaseMessage, setPurchaseMessage] = useState<string | null>(null);
+  const [totalAmount, setTotalAmount] = useState<number | null>(null);
+  const [totalTax, setTotalTax] = useState<number | null>(null);
+  const [totalWithTax, setTotalWithTax] = useState<number | null>(null);
+  const [taxSummary, setTaxSummary] = useState<{ [key: string]: number }>({});
 
   const handleLookup = async () => {
     try {
@@ -70,8 +80,14 @@ const PosSystem: React.FC = () => {
         products: cart.map(item => ({ product_id: item.product_id, quantity: item.quantity })),
       };
       const response = await axios.post('http://localhost:8000/transactions', transaction);
+      const { total_amount, total_tax, total_with_tax, tax_summary } = response.data;
+
+      setPurchaseMessage(`お買い上げありがとうございました。`);
+      setTotalAmount(total_amount);
+      setTotalTax(total_tax);
+      setTotalWithTax(total_with_tax);
+      setTaxSummary(tax_summary);
       setCart([]);
-      alert('Purchase successful');
     } catch (error: any) { // errorをany型にキャスト
       console.error('Purchase failed', error);
       alert(`Purchase failed: ${error.response?.data?.detail || 'Unknown error'}`);
@@ -143,14 +159,33 @@ const PosSystem: React.FC = () => {
         ))}
       </ul>
       <h3 className="text-xl font-semibold text-cyan-600">合計: ¥{cart.reduce((total, item) => total + item.price * item.quantity, 0)}</h3>
-      <button
-        onClick={handlePurchase}
-        className="w-full mt-4 bg-emerald-500 hover:bg-emerald-600 text-white py-2 rounded transition duration-300"
-      >
-        購入
-      </button>
+      {purchaseMessage && (
+        <div className="mt-4 p-4 border rounded bg-green-50 text-green-700">
+          <p>{purchaseMessage}</p>
+          <p>合計金額: ¥{totalAmount}</p>
+          <hr />
+          <p>税金</p>
+          <ul>
+            {Object.entries(taxSummary).map(([rate, amount], index) => (
+              <li key={index}>
+                - {rate}% : ¥{Math.round(amount)}
+              </li>
+            ))}
+          </ul>
+          <hr />
+          <p>税込の合計金額: ¥{totalWithTax !== null ? Math.round(totalWithTax) : '-'}</p>
+        </div>
+      )}
+      {!purchaseMessage && (
+        <button
+          onClick={handlePurchase}
+          className="w-full mt-4 bg-emerald-500 hover:bg-emerald-600 text-white py-2 rounded transition duration-300"
+        >
+          購入
+        </button>
+      )}
     </div>
   );
 };
 
-export default PosSystem
+export default PosSystem;

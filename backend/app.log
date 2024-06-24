@@ -1,6 +1,68 @@
-2024-06-23 14:15:44,480 - root - INFO - Transaction data: emp_cd='E001' store_cd='S001' pos_no='P001' total_amt=700.0 ttl_amt_ex_tax=636.3636363636363 products=[Product(product_id=2, quantity=1), Product(product_id=43, quantity=1)]
-2024-06-23 14:15:44,531 - root - INFO - Rounded TTL_AMT_EX_TAX: 636.36
-2024-06-23 14:15:44,539 - root - INFO - Inserted into transactions: 9
-2024-06-23 14:15:44,545 - root - INFO - Inserted into transaction_details: TRD_ID=9, PRD_ID=2
-2024-06-23 14:15:44,546 - root - INFO - Inserted into transaction_details: TRD_ID=9, PRD_ID=43
-2024-06-23 14:15:44,572 - root - INFO - Transaction committed successfully
+2024-06-23 15:58:01,519 - root - INFO - Transaction data: emp_cd='E001' store_cd='S001' pos_no='P001' total_amt=2900.0 ttl_amt_ex_tax=2636.3636363636365 products=[Product(product_id=43, quantity=5), Product(product_id=24, quantity=2), Product(product_id=31, quantity=1)]
+2024-06-23 15:58:01,548 - root - INFO - Rounded TTL_AMT_EX_TAX: 2636.36
+2024-06-23 15:58:01,549 - root - INFO - Inserted into transactions: 24
+2024-06-23 15:58:01,550 - root - INFO - Inserted into transaction_details: TRD_ID=24, PRD_ID=43
+2024-06-23 15:58:01,551 - root - INFO - Inserted into transaction_details: TRD_ID=24, PRD_ID=24
+2024-06-23 15:58:01,551 - root - INFO - Inserted into transaction_details: TRD_ID=24, PRD_ID=31
+2024-06-23 15:58:01,598 - root - INFO - Transaction committed successfully
+2024-06-23 16:00:48,989 - root - INFO - Transaction data: emp_cd='E001' store_cd='S001' pos_no='P001' total_amt=2700.0 ttl_amt_ex_tax=2454.5454545454545 products=[Product(product_id=43, quantity=5), Product(product_id=31, quantity=1)]
+2024-06-23 16:00:49,128 - root - INFO - Rounded TTL_AMT_EX_TAX: 2454.55
+2024-06-23 16:00:49,156 - root - INFO - Inserted into transactions: 25
+2024-06-23 16:00:49,169 - root - INFO - Inserted into transaction_details: TRD_ID=25, PRD_ID=43
+2024-06-23 16:00:49,170 - root - INFO - Inserted into transaction_details: TRD_ID=25, PRD_ID=31
+2024-06-23 16:00:49,220 - root - INFO - Transaction committed successfully
+2024-06-24 00:21:49,645 - root - INFO - Transaction data: emp_cd='E001' store_cd='S001' pos_no='P001' total_amt=2400.0 ttl_amt_ex_tax=2181.8181818181815 products=[Product(product_id=43, quantity=3), Product(product_id=31, quantity=3), Product(product_id=24, quantity=3)]
+2024-06-24 00:21:49,681 - root - INFO - Rounded TTL_AMT_EX_TAX: 2181.82
+2024-06-24 00:21:49,804 - root - INFO - Inserted into transactions: 26
+2024-06-24 00:21:49,844 - root - INFO - Inserted into transaction_details: TRD_ID=26, PRD_ID=43
+2024-06-24 00:21:49,845 - root - INFO - Inserted into transaction_details: TRD_ID=26, PRD_ID=31
+2024-06-24 00:21:49,846 - root - INFO - Inserted into transaction_details: TRD_ID=26, PRD_ID=24
+2024-06-24 00:21:49,862 - root - INFO - Transaction committed successfully
+2024-06-24 00:21:57,980 - root - INFO - Transaction data: emp_cd='E001' store_cd='S001' pos_no='P001' total_amt=0.0 ttl_amt_ex_tax=0.0 products=[]
+2024-06-24 00:21:58,044 - root - INFO - Rounded TTL_AMT_EX_TAX: 0.0
+2024-06-24 00:21:58,045 - root - INFO - Inserted into transactions: 27
+2024-06-24 00:21:58,058 - root - INFO - Transaction committed successfully
+2024-06-24 00:22:08,542 - root - INFO - Transaction data: emp_cd='E001' store_cd='S001' pos_no='P001' total_amt=0.0 ttl_amt_ex_tax=0.0 products=[]
+2024-06-24 00:22:08,596 - root - INFO - Rounded TTL_AMT_EX_TAX: 0.0
+2024-06-24 00:22:08,597 - root - INFO - Inserted into transactions: 28
+2024-06-24 00:22:08,613 - root - INFO - Transaction committed successfully
+2024-06-24 00:22:25,206 - root - INFO - Transaction data: emp_cd='E001' store_cd='S001' pos_no='P001' total_amt=500.0 ttl_amt_ex_tax=454.5454545454545 products=[Product(product_id=43, quantity=1)]
+2024-06-24 00:22:25,234 - root - INFO - Rounded TTL_AMT_EX_TAX: 454.55
+2024-06-24 00:22:25,235 - root - INFO - Inserted into transactions: 29
+2024-06-24 00:22:25,236 - root - INFO - Inserted into transaction_details: TRD_ID=29, PRD_ID=43
+2024-06-24 00:22:25,253 - root - INFO - Transaction committed successfully
+2024-06-24 00:24:15,528 - root - INFO - Transaction data: emp_cd='E001' store_cd='S001' pos_no='P001' total_amt=0.0 ttl_amt_ex_tax=0.0 products=[]
+2024-06-24 00:24:15,628 - root - INFO - Rounded TTL_AMT_EX_TAX: 0.0
+2024-06-24 00:24:15,629 - root - INFO - Inserted into transactions: 30
+2024-06-24 00:24:15,644 - root - INFO - Transaction committed successfully
+2024-06-24 00:24:19,405 - root - INFO - Transaction data: emp_cd='E001' store_cd='S001' pos_no='P001' total_amt=0.0 ttl_amt_ex_tax=0.0 products=[]
+2024-06-24 00:24:19,492 - root - INFO - Rounded TTL_AMT_EX_TAX: 0.0
+2024-06-24 00:24:19,511 - root - INFO - Inserted into transactions: 31
+2024-06-24 00:24:19,540 - root - INFO - Transaction committed successfully
+2024-06-24 00:25:01,159 - root - INFO - Transaction data: emp_cd='E001' store_cd='S001' pos_no='P001' total_amt=500.0 ttl_amt_ex_tax=454.5454545454545 products=[Product(product_id=43, quantity=1)]
+2024-06-24 00:25:01,267 - root - INFO - Rounded TTL_AMT_EX_TAX: 454.55
+2024-06-24 00:25:01,291 - root - INFO - Inserted into transactions: 32
+2024-06-24 00:25:01,347 - root - INFO - Inserted into transaction_details: TRD_ID=32, PRD_ID=43
+2024-06-24 00:25:01,378 - root - INFO - Transaction committed successfully
+2024-06-24 00:29:24,125 - root - INFO - Transaction data: emp_cd='E001' store_cd='S001' pos_no='P001' total_amt=500.0 ttl_amt_ex_tax=454.5454545454545 products=[Product(product_id=43, quantity=1)]
+2024-06-24 00:29:27,278 - root - INFO - Rounded TTL_AMT_EX_TAX: 454.55
+2024-06-24 00:29:28,075 - root - INFO - Transaction data: emp_cd='E001' store_cd='S001' pos_no='P001' total_amt=500.0 ttl_amt_ex_tax=454.5454545454545 products=[Product(product_id=43, quantity=1)]
+2024-06-24 00:29:28,959 - root - INFO - Inserted into transactions: 33
+2024-06-24 00:29:28,964 - root - INFO - Inserted into transaction_details: TRD_ID=33, PRD_ID=43
+2024-06-24 00:29:29,008 - root - INFO - Transaction committed successfully
+2024-06-24 00:29:29,579 - root - INFO - Rounded TTL_AMT_EX_TAX: 454.55
+2024-06-24 00:29:29,586 - root - INFO - Inserted into transactions: 34
+2024-06-24 00:29:29,607 - root - INFO - Inserted into transaction_details: TRD_ID=34, PRD_ID=43
+2024-06-24 00:29:29,684 - root - INFO - Transaction committed successfully
+2024-06-24 01:09:09,527 - root - INFO - Transaction data: emp_cd='E001' store_cd='S001' pos_no='P001' total_amt=1600.0 ttl_amt_ex_tax=1454.5454545454545 products=[Product(product_id=43, quantity=2), Product(product_id=31, quantity=3)]
+2024-06-24 01:09:09,985 - root - INFO - Rounded TTL_AMT_EX_TAX: 1454.55
+2024-06-24 01:09:12,173 - root - INFO - Inserted into transactions: 35
+2024-06-24 01:09:12,956 - root - INFO - Inserted into transaction_details: TRD_ID=35, PRD_ID=43
+2024-06-24 01:09:12,958 - root - INFO - Inserted into transaction_details: TRD_ID=35, PRD_ID=31
+2024-06-24 01:09:13,210 - root - INFO - Transaction committed successfully
+2024-06-24 01:18:24,704 - root - INFO - Transaction data: emp_cd='E001' store_cd='S001' pos_no='P001' total_amt=1400.0 ttl_amt_ex_tax=1272.7272727272725 products=[Product(product_id=43, quantity=2), Product(product_id=24, quantity=4)]
+2024-06-24 01:18:24,747 - root - INFO - Rounded TTL_AMT_EX_TAX: 1272.73
+2024-06-24 01:18:24,807 - root - INFO - Inserted into transactions: 36
+2024-06-24 01:18:24,810 - root - INFO - Inserted into transaction_details: TRD_ID=36, PRD_ID=43
+2024-06-24 01:18:24,811 - root - INFO - Inserted into transaction_details: TRD_ID=36, PRD_ID=24
+2024-06-24 01:18:24,885 - root - INFO - Transaction committed successfully
